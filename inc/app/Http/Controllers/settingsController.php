@@ -263,6 +263,11 @@ class settingsController extends Controller
                 'mother_nid' => 'required|numeric|digits:10 or 17'
             ]);
         }
+
+        $this->validate($request,[
+            'brothers' => 'required|numeric',
+            'sisters' => 'required|numeric',
+        ]);
         $family = FamilyInfo::where('number', $request->number)->first();
 
         $family->number             = $request->number;

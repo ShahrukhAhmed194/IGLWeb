@@ -32,7 +32,8 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <label for="father_nid"><b>Father NID : </b></label>
-                    <input type="text" placeholder="Enter Father NID" name="father_nid" id="father_nid" value="{{old('father_nid')}}" >
+                    <input type="text" onkeydown="validateFatherNID()" placeholder="Enter Father NID" name="father_nid" id="father_nid" value="{{old('father_nid')}}" >
+                    <div class="alert alert-danger" id="f_nid_msg"></div>
                     @error('father_nid')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -70,7 +71,8 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <label for="mother_nid"><b>Mother NID : </b></label>
-                    <input type="text" placeholder="Enter Mother NID" name="mother_nid" id="mother_nid" value="{{old('mother_nid')}}">
+                    <input type="text" onkeydown="validateMotherNID()" placeholder="Enter Mother NID" name="mother_nid" id="mother_nid" value="{{old('mother_nid')}}">
+                    <div class="alert alert-danger" id="m_nid_msg"></div>
                     @error('mother_nid')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -123,13 +125,70 @@
   </div>
 
   <script>
-      
+      $('f_nid_msg').hide();
+      $('m_nid_msg').hide();
       $(document).ready(function(){
           $('#button').hide();
           
       });
+
       function submitFunction(){
         $('#button').click();
+      }
+
+      function validateFatherNID(){
+        let nid;
+        nid = $('#father_nid').val();
+        nid_len = $('#father_nid').val().length;
+
+        if(isNaN(nid)){
+            $('#f_nid_msg').text('NID or Birth Certificate must be digiis only');
+            $('#f_nid_msg').show();
+        }
+        else{
+            if(nid==0){
+                $('#f_nid_msg').hide();     
+            }
+            else{
+                if(nid_len!=10 && nid_len!=17 ){
+                $('#f_nid_msg').text('NID or Birth Certificate must be 10 or 17 digits');
+                $('#f_nid_msg').show();
+
+                }else{
+                    $('#f_nid_msg').hide();
+
+                }
+
+            }
+        }
+      }
+
+      function validateMotherNID(){
+        let nid;
+        nid = $('#mother_nid').val();
+        nid_len = $('#mother_nid').val().length;
+
+        if(isNaN(nid)){
+            $('#m_nid_msg').text('NID or Birth Certificate must be digiis only');
+            $('#m_nid_msg').show();
+        }
+        else{
+            if(nid==0){
+                $('#m_nid_msg').hide();     
+            }
+            else{
+                if(nid_len!=10 && nid_len!=17 ){
+                $('#m_nid_msg').text('NID or Birth Certificate must be 10 or 17 digits');
+                $('#m_nid_msg').show();
+
+                }else{
+                    $('#m_nid_msg').hide();
+
+                }
+
+            }      
+            
+        }
       }
   </script>
 

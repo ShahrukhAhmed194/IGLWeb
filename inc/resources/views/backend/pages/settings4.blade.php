@@ -213,14 +213,14 @@
           <div class="row">
             <div class="col-md-6 col-sm-12">
               <label for="brothers"><b>Brothers : </b></label>
-              <input type="number" placeholder="Put 0 If Not Any" name="brothers" id="brothers" value="{{$usersDetails['brothers']}}">
+              <input type="text" placeholder="Put 0 If Not Any" name="brothers" id="brothers" value="{{$usersDetails['brothers']}}">
               @error('brothers')
                   <div class="alert alert-danger">{{ $message }}</div>
               @enderror
             </div>
             <div class="col-md-6 col-sm-12">  
                 <label for="sisters"><b>Sisters : </b></label>
-                <input type="number" placeholder="Put 0 If Not Any" name="sisters" id="sisters" value="{{$usersDetails['sisters']}}">
+                <input type="text" placeholder="Put 0 If Not Any" name="sisters" id="sisters" value="{{$usersDetails['sisters']}}">
                 @error('sisters')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror

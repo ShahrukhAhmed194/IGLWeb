@@ -64,7 +64,7 @@
                     <input type="hidden" name="number" id="number" value="{{$phone}}" >
 
                     <label for="NID_BRN" ><b>NID OR Birth Registration Number : </b></label>
-                    <input type="text"name="NID_BRN" id="NID_BRN" onmouseout="validateNID()" value="{{old('NID_BRN')}}"  placeholder="Enter NID or Birth Registration Number"  required>
+                    <input type="text"name="NID_BRN" id="NID_BRN" onkeydown="validateNID()" value="{{old('NID_BRN')}}"  placeholder="Enter NID or Birth Registration Number"  required>
                     @error('NID_BRN')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -78,13 +78,13 @@
                     </label>&nbsp;&nbsp;&nbsp;<br>
 
                     <label  id="label_driving_license"><b>Driving License :</b></label>
-                    <input  type="text" name="driving_license" id="driving_license" onmouseout="validateDrivingLicense()" placeholder="Driving License" required>
+                    <input  type="text" name="driving_license" id="driving_license" onkeydown="validateDrivingLicense()" placeholder="Driving License" required>
                     @error('driving_license')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                     <div class="alert alert-danger" id="license_msg"></div>
                     <label  id="label_passport"><b>Passport :</b></label><br>
-                    <input  type="text" name="passport" id="passport" onmouseout="validatePassport()" placeholder="Passport" required>
+                    <input  type="text" name="passport" id="passport" onkeydown="validatePassport()" placeholder="Passport" required>
                     @error('passport')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -99,7 +99,7 @@
                         <div class="form-group required-field col-md-6">
                             @php($divisions=\App\Models\Division::orderBy('name', 'ASC')->get())
                             <label><b>&nbsp; Devision :</b> </label><br>
-                            <select name="division" id="division" class="chosen" data-placeholder="Choose Your division..."  required>
+                            <select name="division" id="division" class="chosen" onchange="divisionChanged()"  required>
                                 <option value="">Select Division</option>
                                 @foreach($divisions as $dis)
                                     <option value="{{$dis->id}}" >{{$dis->name}}</option>
@@ -111,8 +111,8 @@
                         </div>
                         <div class="form-group required-field col-md-6">
                             <label><b>&nbsp; District :</b></label><br>
-                            <select name="district" id="district" data-placeholder="Choose Your District..." required>
-                                <option value="">Select District</option>
+                            <select name="district" id="district" onchange="districtChanged()" required>
+                                <option value="">District</option>
                             </select>
                             @error('district')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -121,7 +121,7 @@
                         <div class="form-group required-field col-md-6">
                             <label><b>&nbsp; Upazila :</b></label><br>
                             <select name="upazila" id="upazila" data-placeholder="Choose Your Upazila..." required>                                
-                                <option value="">Select Upazila</option>
+                                <option value="">Upazila</option>
                             </select>
                             @error('upazila')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -240,39 +240,35 @@
         }
     </script>
 
-    <script>
-        $('#division').mouseenter(function(){
-            $('#division').chosen();
-        });
-        
+    <script>       
        
-        $('#division').change(function(){
-            let divison_id = $(this).val();
-            let html = '<option >Select District</option>';
-            
+        function divisionChanged(){
+            let divison_id = $('#division').val();
+            let html = '<option value="">Select District</option>';
+
             $.ajax({
                 type : "GET",
                 url  : "{{route('select_district')}}",
                 data : { divison_id: divison_id},
                 success: function (response) {
                     $.each(response,function(key,value){
-                        html += '<option value="'+value.id+'">'+value.name+'</option>'
+                        html += '<option value="'+value.id+'">'+value.name+'</option>';
                     });
                     
                     $('#district').html(html);
-                    $('#district').chosen();
-
+                    // $('#district').chosen();
+                    
                 },
                 error: function (data){
                     console.log('fail');
                 }
             });
-                
-        });
-         
-        $('#district').change(function(){
-            let district_id = $(this).val();
-            let html = '<option >Select Upazila</option>';
+            
+
+        }
+        function districtChanged(){
+            let district_id = $('#district').val();
+            let html = '<option value="">Select Upazila</option>';
             $.ajax({
                 type : "GET",
                 url  : "{{route('select_upazila')}}",
@@ -283,13 +279,13 @@
                        
                     });
                     $('#upazila').html(html);
-                    $('#upazila').chosen();
+                    // $('#upazila').chosen();
                 },
                 error: function(data){
                     console.log('failed');
                 }
             })
-        })
+        }
         
     </script>
 

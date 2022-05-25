@@ -41,7 +41,7 @@
             
               <div class="control-group" >
                 <label class="control-label"  for="password">Password</label>
-                <input id="password" onmouseout="validate()" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                <input id="password" onkeydown="validatePassword()" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
                 <div id="alert" class="alert alert-danger"></div>
                 @error('password')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -73,13 +73,13 @@
 
 <script>
   $('#alert').hide();
-  function validate(){
+  function validatePassword(){
     let a = document.getElementById("password").value;
     
     if(a.length==0){
       $('#alert').hide();
     }
-    else if(a.length<8){
+    else if(a.length<7){
       $('#alert').show();
       document.getElementById("alert").innerHTML = "Please Provide Atleast 8 Character";
     }

@@ -88,7 +88,7 @@ class PersonalInfoController extends Controller
         $id = $request->divison_id;
 
         $districts = District::where('division_id' , $id)->get();
-        
+
         return $districts;
     }
 
